@@ -1,13 +1,14 @@
 package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.application.service;
 
-import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.application.service.interfaces.IEventService;
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.port.in.IEventService;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.model.Event;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.model.Venue;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.port.out.EventRepositoryPort;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.port.out.VenueRepositoryPort;
-import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.exception.ResourceNotFoundException;
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.exception.ResourceNotFoundException;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.dto.request.EventRequest;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.dto.response.EventResponse;
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.mapper.EventMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,13 @@ public class EventService implements IEventService {
 
     private final EventRepositoryPort eventRepositoryPort;
     private final VenueRepositoryPort venueRepositoryPort;
+    private final EventMapper mapper;
 
-    public EventService(EventRepositoryPort eventRepositoryPort, VenueRepositoryPort venueRepositoryPort) {
+
+    public EventService(EventRepositoryPort eventRepositoryPort, VenueRepositoryPort venueRepositoryPort, EventMapper mapper) {
         this.eventRepositoryPort = eventRepositoryPort;
         this.venueRepositoryPort = venueRepositoryPort;
+        this.mapper = mapper;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class EventService implements IEventService {
         Venue venue = venueRepositoryPort.findById(request.getVenueId())
                 .orElseThrow(() -> new ResourceNotFoundException("Venue no encontrado con el id: " + request.getVenueId()));
 
-        Event event = toDomain(request, venue);
+        Event event = mapper.toDomain(request);
         Event savedEvent = eventRepositoryPort.save(event);
         return toResponse(savedEvent);
     }
@@ -90,16 +94,25 @@ public class EventService implements IEventService {
         return response;
     }
 
-    private Event toDomain(EventRequest request, Venue venue) {
-        Event domain = new Event();
-        domain.setNameEvent(request.getNameEvent());
-        domain.setStartTime(request.getStartTime());
-        domain.setEndTime(request.getEndTime());
-        domain.setDescription(request.getDescription());
-        domain.setCapacity(request.getCapacity());
-        domain.setVenue(venue);
-        return domain;
-    }
+//    private Event toDomain(EventRequest request, Venue venue) {
+//        Event domain = new Event();
+//        domain.setNameEvent(request.getNameEvent());
+//        domain.setStartTime(request.getStartTime());
+//        domain.setEndTime(request.getEndTime());
+//        domain.setDescription(request.getDescription());
+//        domain.setCapacity(request.getCapacity());
+//        domain.setVenue(venue);
+//        return domain;
+////    private Event toDomain(EventRequest request, Venue venue) {
+//        Event domain = new Event();
+//        domain.setNameEvent(request.getNameEvent());
+//        domain.setStartTime(request.getStartTime());
+//        domain.setEndTime(request.getEndTime());
+//        domain.setDescription(request.getDescription());
+//        domain.setCapacity(request.getCapacity());
+//        domain.setVenue(venue);
+//        return domain;
+//    }
 
     private void updateDomainFromRequest(Event domain, EventRequest request, Venue venue) {
         domain.setNameEvent(request.getNameEvent());

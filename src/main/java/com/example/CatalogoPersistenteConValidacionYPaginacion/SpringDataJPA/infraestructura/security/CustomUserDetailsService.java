@@ -1,4 +1,4 @@
-package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.security;
+package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.security;
 
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.model.User;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.port.out.UserRepositoryPort;

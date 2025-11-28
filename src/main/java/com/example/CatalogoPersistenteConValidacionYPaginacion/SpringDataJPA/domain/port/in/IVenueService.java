@@ -1,4 +1,4 @@
-package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.application.service.interfaces;
+package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.port.in;
 
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.dto.request.VenueRequest;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.dto.response.VenueResponse;

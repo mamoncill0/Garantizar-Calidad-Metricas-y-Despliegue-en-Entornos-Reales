@@ -7,7 +7,4 @@ public class VenueResponse {
 
     private Integer id;
     private String name;
-    private String city;
-    private String address;
-    private int capacity;
 }

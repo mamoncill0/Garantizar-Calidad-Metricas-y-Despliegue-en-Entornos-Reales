@@ -1,10 +1,10 @@
 package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.application.service;
 
-import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.application.service.interfaces.IVenueService;
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.port.in.IVenueService;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.model.Venue;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.port.out.VenueRepositoryPort;
-import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.exception.DuplicateResourceException;
-import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.exception.ResourceNotFoundException;
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.exception.DuplicateResourceException;
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.exception.ResourceNotFoundException;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.dto.request.VenueRequest;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.dto.response.VenueResponse;
 import org.springframework.data.domain.Page;
@@ -76,9 +76,6 @@ public class VenueService implements IVenueService {
         VenueResponse response = new VenueResponse();
         response.setId(domain.getId());
         response.setName(domain.getName());
-        response.setCity(domain.getCity());
-        response.setAddress(domain.getAddress());
-        response.setCapacity(domain.getCapacity());
         return response;
     }
 

@@ -27,6 +27,6 @@ public class EventRequest {
     @Min(value = 1, message = "Capacity must be at least 1")
     private int capacity;
 
-    @NotNull(message = "Venue id is required")
+
     private Integer venueId;
 }

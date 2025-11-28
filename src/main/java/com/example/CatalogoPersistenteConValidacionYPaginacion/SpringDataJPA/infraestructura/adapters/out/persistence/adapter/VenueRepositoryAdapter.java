@@ -1,10 +1,10 @@
-package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.adapters.out.persistence;
+package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.adapters.out.persistence.adapter;
 
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.model.Venue;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.port.out.VenueRepositoryPort;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.adapters.out.persistence.entity.VenueJpaEntity;
-import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.adapters.out.persistence.mapper.VenuePersistenceMapper;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.adapters.out.persistence.repository.VenueJpaRepository;
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.adapters.out.persistence.mapper.VenuePersistenceMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -24,9 +24,26 @@ public class VenueRepositoryAdapter implements VenueRepositoryPort {
 
     @Override
     public Venue save(Venue venue) {
-        VenueJpaEntity venueJpaEntity = venueMapper.toJpaEntity(venue);
-        VenueJpaEntity savedEntity = venueJpaRepository.save(venueJpaEntity);
-        return venueMapper.toDomain(savedEntity);
+        // Distinguir entre creación y actualización
+        if (venue.getId() == null) {
+            // Creación
+            VenueJpaEntity venueJpaEntity = venueMapper.toJpaEntity(venue);
+            VenueJpaEntity savedEntity = venueJpaRepository.save(venueJpaEntity);
+            return venueMapper.toDomain(savedEntity);
+        } else {
+            // Actualización
+            VenueJpaEntity existingEntity = venueJpaRepository.findById(venue.getId())
+                    .orElseThrow(() -> new RuntimeException("Venue no encontrado para actualizar"));
+
+            // Actualizar solo los campos necesarios, dejando la colección intacta
+            existingEntity.setName(venue.getName());
+            existingEntity.setCity(venue.getCity());
+            existingEntity.setAddress(venue.getAddress());
+            existingEntity.setCapacity(venue.getCapacity());
+
+            VenueJpaEntity updatedEntity = venueJpaRepository.save(existingEntity);
+            return venueMapper.toDomain(updatedEntity);
+        }
     }
 
     @Override

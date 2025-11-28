@@ -1,4 +1,4 @@
-package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.security;
+package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

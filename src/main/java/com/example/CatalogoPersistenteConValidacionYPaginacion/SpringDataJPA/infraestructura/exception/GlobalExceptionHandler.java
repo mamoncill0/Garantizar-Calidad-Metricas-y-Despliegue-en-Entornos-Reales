@@ -1,5 +1,8 @@
-package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.exception;
+package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.exception;
 
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.exception.BadRequestException;
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.exception.DuplicateResourceException;
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.exception.ResourceNotFoundException;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;

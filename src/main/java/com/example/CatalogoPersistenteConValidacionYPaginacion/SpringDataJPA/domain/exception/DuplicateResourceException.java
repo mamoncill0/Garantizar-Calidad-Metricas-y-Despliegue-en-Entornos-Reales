@@ -1,4 +1,4 @@
-package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.exception;
+package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.exception;
 
 public class DuplicateResourceException extends RuntimeException {
     public DuplicateResourceException(String message) {

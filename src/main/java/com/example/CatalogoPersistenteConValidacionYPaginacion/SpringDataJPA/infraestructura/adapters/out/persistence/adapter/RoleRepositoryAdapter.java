@@ -1,4 +1,4 @@
-package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.adapters.out.persistence;
+package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.adapters.out.persistence.adapter;
 
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.model.Role;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.port.out.RoleRepositoryPort;

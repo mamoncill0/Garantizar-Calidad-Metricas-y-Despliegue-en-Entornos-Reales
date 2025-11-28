@@ -1,14 +1,14 @@
-package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.adapters.in.controller;
+package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.adapters.in.rest;
 
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.model.Role;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.model.User;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.port.out.RoleRepositoryPort;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.port.out.UserRepositoryPort;
-import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.exception.BadRequestException;
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.exception.BadRequestException;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.dto.request.LoginRequest;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.dto.request.SignUpRequest;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.dto.response.JwtAuthenticationResponse;
-import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.security.JwtTokenProvider;
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.security.JwtTokenProvider;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,7 +1,7 @@
-package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.config;
+package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.config;
 
-import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.security.JwtAuthenticationEntryPoint;
-import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.security.JwtAuthenticationFilter;
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.security.JwtAuthenticationEntryPoint;
+import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

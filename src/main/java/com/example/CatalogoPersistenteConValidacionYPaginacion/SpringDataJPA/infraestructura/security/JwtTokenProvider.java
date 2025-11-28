@@ -1,4 +1,4 @@
-package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.security;
+package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
