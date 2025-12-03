@@ -1,0 +1,46 @@
+# La etiqueta 'version' ya no es necesaria en las versiones modernas de Docker Compose.
+
+services:
+  # Servicio de la Base de Datos (MySQL)
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'administracion'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'rootpassword' # Contraseña para el usuario root de MySQL
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    # Healthcheck para asegurar que la BD esté lista antes de que la app inicie.
+    healthcheck:
+      # Se usa la contraseña directamente en lugar de una variable para evitar warnings.
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Servicio de la Aplicación (Spring Boot)
+  app:
+    container_name: spring_app
+    build: .
+    restart: on-failure
+    depends_on:
+      db:
+        condition: service_healthy # La app esperará a que el healthcheck de la BD sea exitoso.
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/administracion?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: 'user'
+      SPRING_DATASOURCE_PASSWORD: 'password'
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_FLYWAY_ENABLED: true
+
+volumes:
+  # Define el volumen para la persistencia de los datos de MySQL.
+  mysql-data:

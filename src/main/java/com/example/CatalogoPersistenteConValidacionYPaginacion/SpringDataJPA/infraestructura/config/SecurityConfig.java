@@ -2,7 +2,6 @@ package com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.in
 
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.security.JwtAuthenticationEntryPoint;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.security.JwtAuthenticationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,14 +24,6 @@ import java.util.Arrays;
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
-//    @Autowired
-//    private JwtAuthenticationFilter jwtAuthenticationFilter;
-
-//    @Autowired
-//    private JwtAuthenticationEntryPoint unauthorizedHandler;
-
-    // Siempre es mejor usar Java puro para inyectar un constructor antes que usar anotaciones
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
@@ -69,19 +60,17 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
-                // Manejo de excepciones: usa nuestro EntryPoint para errores de autenticación
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-                // Política de sesión: STATELESS, ya que usamos JWT
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
                         // Rutas públicas
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll() // Permitir acceso a todos los endpoints de Actuator
                         // Todas las demás rutas requieren autenticación
                         .anyRequest().authenticated()
                 );
 
-        // Añadimos nuestro filtro JWT antes del filtro estándar de Spring
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
