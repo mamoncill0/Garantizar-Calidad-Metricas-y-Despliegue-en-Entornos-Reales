@@ -9,5 +9,5 @@ public class VenueResponse {
     private String name;
     private String city;
     private String address;
-    private String capacity;
+    private int capacity; // <-- CORREGIDO: Cambiado de String a int
 }

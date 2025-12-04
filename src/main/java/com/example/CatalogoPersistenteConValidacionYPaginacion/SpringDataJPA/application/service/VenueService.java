@@ -7,7 +7,6 @@ import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.dom
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.domain.exception.ResourceNotFoundException;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.dto.request.VenueRequest;
 import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.dto.response.VenueResponse;
-import com.example.CatalogoPersistenteConValidacionYPaginacion.SpringDataJPA.infraestructura.mapper.VenueMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,11 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class VenueService implements IVenueService {
 
     private final VenueRepositoryPort venueRepositoryPort;
-    private final VenueMapper venueMapper;
 
-    public VenueService(VenueRepositoryPort venueRepositoryPort,  VenueMapper venueMapper) {
+    public VenueService(VenueRepositoryPort venueRepositoryPort) {
         this.venueRepositoryPort = venueRepositoryPort;
-        this.venueMapper = venueMapper;
     }
 
     @Override
@@ -30,24 +27,22 @@ public class VenueService implements IVenueService {
         if (venueRepositoryPort.existsByName(request.getName())) {
             throw new DuplicateResourceException("Ya existe un venue con el nombre: " + request.getName());
         }
-        // Usamos el mapper, para usar el mapper debemos llamar a la variable que declaramos
-        //En este caso se llama venueMapper (venueMapper.toDomain) es el metodo que declaramos en la interfaz
-        Venue venue = venueMapper.toDomain(request);
+        Venue venue = toDomain(request);
         Venue savedVenue = venueRepositoryPort.save(venue);
-        return venueMapper.toResponse(savedVenue);
+        return toResponse(savedVenue);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<VenueResponse> findAll(Pageable pageable) {
-        return venueRepositoryPort.findAll(pageable).map(venueMapper::toResponse);
+        return venueRepositoryPort.findAll(pageable).map(this::toResponse);
     }
 
     @Override
     @Transactional(readOnly = true)
     public VenueResponse findById(Integer id) {
         return venueRepositoryPort.findById(id)
-                .map(venueMapper::toResponse)
+                .map(this::toResponse)
                 .orElseThrow(() -> new ResourceNotFoundException("Venue no encontrado con el id: " + id));
     }
 
@@ -61,9 +56,9 @@ public class VenueService implements IVenueService {
             throw new DuplicateResourceException("Ya existe un venue con el nombre: " + request.getName());
         }
 
-        venueMapper.updateDomainFromRequest(request, existingVenue);
+        updateDomainFromRequest(existingVenue, request);
         Venue updatedVenue = venueRepositoryPort.save(existingVenue);
-        return venueMapper.toResponse(updatedVenue);
+        return toResponse(updatedVenue);
     }
 
     @Override
@@ -73,5 +68,33 @@ public class VenueService implements IVenueService {
             throw new ResourceNotFoundException("Venue no encontrado con el id: " + id);
         }
         venueRepositoryPort.deleteById(id);
+    }
+
+    // --- MAPPERS PRIVADOS DE LA CAPA DE APLICACIÓN ---
+
+    private VenueResponse toResponse(Venue domain) {
+        VenueResponse response = new VenueResponse();
+        response.setId(domain.getId());
+        response.setName(domain.getName());
+        response.setCity(domain.getCity());
+        response.setAddress(domain.getAddress());
+        response.setCapacity(domain.getCapacity());
+        return response;
+    }
+
+    private Venue toDomain(VenueRequest request) {
+        Venue domain = new Venue();
+        domain.setName(request.getName());
+        domain.setCity(request.getCity());
+        domain.setAddress(request.getAddress());
+        domain.setCapacity(request.getCapacity());
+        return domain;
+    }
+
+    private void updateDomainFromRequest(Venue domain, VenueRequest request) {
+        domain.setName(request.getName());
+        domain.setCity(request.getCity());
+        domain.setAddress(request.getAddress());
+        domain.setCapacity(request.getCapacity());
     }
 }

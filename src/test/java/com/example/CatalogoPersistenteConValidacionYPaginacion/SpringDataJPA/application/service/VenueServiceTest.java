@@ -57,7 +57,7 @@ class VenueServiceTest {
         // 2. Cuando se guarde cualquier objeto Venue, devolvemos nuestro objeto 'venue' de ejemplo
         given(venueRepositoryPort.save(any(Venue.class))).willReturn(venue);
 
-        // When: Ejecutamos el método que queremos probar
+        // When: Ejecutamos el mét0do que queremos probar
         VenueResponse savedVenueResponse = venueService.create(venueRequest);
 
         // Then: Verificamos que el resultado es el esperado

@@ -51,7 +51,7 @@ class VenueControllerTest {
         venueResponse.setName("Teatro Metropolitano");
         venueResponse.setCity("Medellín");
         venueResponse.setAddress("Calle 41 #57-30");
-        venueResponse.setCapacity("1634");
+        venueResponse.setCapacity(1634);
     }
 
     @Test

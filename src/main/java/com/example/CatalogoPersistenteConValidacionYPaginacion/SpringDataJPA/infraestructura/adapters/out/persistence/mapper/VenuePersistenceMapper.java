@@ -16,7 +16,7 @@ public class VenuePersistenceMapper {
         venue.setName(jpaEntity.getName());
         venue.setCity(jpaEntity.getCity());
         venue.setAddress(jpaEntity.getAddress());
-        venue.setCapacity(jpaEntity.getCapacity());
+        venue.setCapacity(jpaEntity.getCapacity()); // <-- CORREGIDO: Se pasa el int directamente
         return venue;
     }
 

@@ -10,7 +10,7 @@ public class Venue {
     private String name;
     private String city;
     private String address;
-    private int capacity;
+    private int capacity; // Propiedad de tipo int
     private List<Event> events; // Se relaciona con el objeto de dominio puro Event
 
     // Constructor, Getters y Setters...
@@ -58,7 +58,7 @@ public class Venue {
         this.address = address;
     }
 
-    public int getCapacity() {
+    public int getCapacity() { // <-- CORREGIDO: Ahora devuelve int
         return capacity;
     }
 
